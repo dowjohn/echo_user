@@ -14,7 +14,11 @@ func Init(connection database.Connection) {
 	db = connection
 	e := echo.New()
 	initializeEndpoints(*e)
-	e.Logger.Fatal(e.Start(":1323"))
+
+	// start http server
+	if err := e.Start(":1323"); err != nil {
+		e.Logger.Fatal(err)
+	}
 }
 
 func initializeEndpoints(e echo.Echo) {
@@ -27,27 +31,35 @@ func initializeEndpoints(e echo.Echo) {
 
 // e.GET("/users/:id", getUser)
 func getUser(c echo.Context) error {
-	// User ID from path `users/:id`
 	id := c.Param("id")
-	return c.String(http.StatusOK, id)
+	u, err := db.Get(id)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	if err := c.Bind(u); err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusCreated, u)
 }
 
 // e.POST("/save", save)
 func saveUser(c echo.Context) error {
-	u := model.User{
-		Name:  c.FormValue("name"),
-		Email: c.FormValue("email"),
+	u := new(model.User)
+	if err := c.Bind(u); err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
 	}
 
 	// todo write to db
-	if err := db.SaveAny(); err != nil {
-		return err
+	user, err := db.Save(*u)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	if err := c.Bind(u); err != nil {
-		return err
-	}
-	return c.JSON(http.StatusCreated, u)
+	return c.JSON(http.StatusCreated, user)
 }
 
 func updateUser(c echo.Context) error {

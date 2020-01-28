@@ -6,23 +6,40 @@ var mdb interface{}
 
 type Connection interface {
 	UserSaver
+	UserGetter
 }
 
 type ConnectionImpl struct {
 	UserSaverImpl
+	UserGetterImpl
 }
 
 type UserSaver interface{
-	Save(model.User) error
+	Save(model.User) (*model.User, error)
 }
 
 type UserSaverImpl struct {
+
 }
 
-func (s *UserSaverImpl) Save(user model.User) error {
-
-	return nil
+func (s *UserSaverImpl) Save(user model.User) (*model.User, error) {
+	return nil, nil
 }
+
+type UserGetter interface{
+	Get(string) (*model.User, error)
+}
+
+type UserGetterImpl struct {
+
+}
+
+func (s *UserGetterImpl) Get(userId string) (*model.User, error) {
+	return nil, nil
+}
+
+
+
 
 func Init() (Connection, error) {
 	println("initializing database")
