@@ -63,9 +63,27 @@ func saveUser(c echo.Context) error {
 }
 
 func updateUser(c echo.Context) error {
-	return nil
+	u := new(model.User)
+	if err := c.Bind(u); err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	user, err := db.Save(*u)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusCreated, user)
 }
 
 func deleteUser(c echo.Context) error {
-	return nil
+	id := c.Param("id")
+	_, err := db.Delete(id)
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, err)
+	}
+
+	return c.JSON(http.StatusOK, nil)
 }
