@@ -4,6 +4,7 @@ go 1.13
 
 require (
 	github.com/DataDog/zstd v1.4.4 // indirect
+	github.com/Sectorbob/mlab-ns2 v0.0.0-20171030222938-d3aa0c295a8a
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/google/go-cmp v0.4.0 // indirect
@@ -11,6 +12,7 @@ require (
 	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/mattn/go-colorable v0.1.4 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
+	github.com/mongodb/go-client-mongodb-atlas v0.1.3
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/tidwall/pretty v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.1.0 // indirect

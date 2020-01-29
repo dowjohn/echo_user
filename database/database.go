@@ -4,9 +4,9 @@ import (
 	"context"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"time"
+	"user/env"
 	"user/model"
 )
 
@@ -82,18 +82,14 @@ func (s *UserDeleterImpl) Delete(string) (*string, error) {
 }
 
 // todo the following functions should be the only code in this file
-func Init() (Connection, error) {
+func Init(config *env.Config) (Connection, error) {
 	println("initializing database")
 
-	return initializeConnection(), nil
+	return initializeConnection(config), nil
 }
 
-func initializeConnection() Connection {
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
-	if err != nil {
-		log.Fatal("failed to secure database connection")
-	}
+func initializeConnection(config *env.Config) Connection {
+	client := Configure(config)
 
 	db := client.Database("AtlasDb")
 
