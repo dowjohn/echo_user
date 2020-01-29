@@ -14,7 +14,6 @@ func Configure(config *env.Config) (*mongo.Client) {
 	ctx := context.TODO()
 
 	mongoURI := fmt.Sprintf("mongodb+srv://%s:%s@%s", config.AtlasUser, config.AtlasPassword, config.AtlasHost)
-	//mongoURI = "mongodb+srv://j-dow:8efiWxKqZ7qXvoOo@cluster0-sjjwn.mongodb.net/test?retryWrites=true&w=majority"
 	fmt.Println("connection string is:", mongoURI)
 
 	// Set client options and connect
