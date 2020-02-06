@@ -38,10 +38,6 @@ func getUser(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, err)
 	}
 
-	if err := c.Bind(u); err != nil {
-		return c.JSON(http.StatusInternalServerError, err)
-	}
-
 	return c.JSON(http.StatusCreated, u)
 }
 
