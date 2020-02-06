@@ -37,9 +37,6 @@ func Init() (*Config, error) {
 }
 
 type Config struct {
-	PublicKey        string `json:"publicKey"`
-	PrivateKey       string `json:"privateKey"`
-	AtlasProjectId string `json:"atlasProjectId"`
 	AtlasUser string `json:"atlasUser"`
 	AtlasPassword string `json:"atlasPassword"`
 	AtlasHost string `json:"atlasHost"`
